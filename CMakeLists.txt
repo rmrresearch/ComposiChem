@@ -55,7 +55,7 @@ if("${BUILD_TESTING}")
 
         nwx_pybind11_tests(
             ${PROJECT_NAME}_integration_test
-            "${${PROJECT_NAME}_TESTS_DIR}/integration_tests/test_with_nwx.py"
+            "${${PROJECT_NAME}_TESTS_DIR}/integration_tests/test_composichem.py"
             SUBMODULES nwchemex chemcache friendzone simde chemist pluginplay 
                        parallelzone
         )
