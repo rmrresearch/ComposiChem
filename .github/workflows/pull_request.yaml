@@ -28,4 +28,6 @@ jobs:
       source_dir: ''
       compilers: '["gcc-11", "clang-14"]'
       doc_target: 'composichem_cxx_api'
-    secrets: inherit
+    secrets:
+      CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      CONTAINER_REPO_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
