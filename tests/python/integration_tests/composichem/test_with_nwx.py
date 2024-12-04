@@ -40,24 +40,21 @@ class TestWithNWChemEx(unittest.TestCase):
             'aug-cc-pvtz':
             -1.1,  # Placeholder value; replace with actual expected values
             'aug-cc-pvqz':
-            -1.105  # Placeholder value; replace with actual expected values
+            -1.0156  # Placeholder value; replace with actual expected values
         }
 
-        print('hi')
+        for basis in basis_sets:
+            with self.subTest(basis=basis):
+                mm = ModuleManager()
+                nwx.load_modules(mm)
+                mm.change_input(key, 'basis set', basis)
+                egy = self.mm.run_as(TotalEnergy(), key, mol)
+                print(f"Basis set: {basis}, Calculated Energy (egy): {egy}")
 
-        #for basis in basis_sets:
-        #    with self.subTest(basis=basis):
-        #        self.mm.change_input(key, 'basis set', basis)
-        #        egy = self.mm.run_as(TotalEnergy(), key, mol)
-        #        print(f"Basis set: {basis}, Calculated Energy (egy): {egy}")
-
-        # If you have expected values, use them to validate the result
-        #        self.assertAlmostEqual(egy, expected_energies[basis], places=5)
-
-        # self.mm.change_input(key, 'basis set', 'aug-cc-pvdz')
-        # egy = self.mm.run_as(TotalEnergy(), key, mol)
-        # self.assertAlmostEqual(egy, -1.094184522864, places=5)
-
+        #If you have expected values, use them to validate the result
+                if basis in expected_energies:
+                    self.assertAlmostEqual(egy, expected_energies[basis], places=5)
     def setUp(self):
         self.mm = ModuleManager()
         nwx.load_modules(self.mm)
+
