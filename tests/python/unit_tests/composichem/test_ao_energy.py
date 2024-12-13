@@ -8,6 +8,7 @@ from chemist import PointF, PointD
 from chemist import ShellType
 import unittest
 
+
 class AOEnergyModule:
     """Module to return precomputed AO energy based on the provided basis set."""
     
@@ -17,11 +18,11 @@ class AOEnergyModule:
         self.outputs = {}
 
     def declare_input(self, name):
-        """Declare an input for the module (e.g., 'basis_set')."""
+        """Declare an input for the module."""
         self.inputs[name] = None  # Initialize with None, you can update this later
 
     def declare_output(self, name):
-        """Declare an output for the module (e.g., 'energy')."""
+        """Declare an output for the module."""
         self.outputs[name] = None  # Initialize with None
 
     def run(self):
@@ -47,23 +48,32 @@ class AOEnergyModule:
     def get_output(self):
         """Retrieve the output energy."""
         return self.outputs.get("energy")
+    
+def make_h2():
+    """Creates simple hydrogen molecule for tsting"""
+    return "H2 molecule placeholder"
 
 
-# Example Usage
+# Example 
 if __name__ == "__main__":
-    # Create the AOEnergyModule instance
-    module = AOEnergyModule()
+    # Create a ModuleManager instance
+    mm = ModuleManager()
+
+    #load necessary modules into it
+    nwx.load_modules(mm)
+
+    #Add the AOEnergyModule to it
+    mm.add_module(AOEnergyModule(), 'My Module')
+
+    #create a test molecule 
+    mol = make_h2()
     
-    # Declare input and output
-    module.declare_input("basis_set")
-    module.declare_output("energy")
-    
-    # Set the input basis set
-    module.inputs["basis_set"] = "aug-cc-pvdz"
-    
-    # Run the module to compute the energy
-    module.run()
-    
-    # Retrieve and print the output energy
-    energy = module.get_output()
+    # Run MolecularBasisSet to get the basis set object
+    basis = mm.run_as(AOBasisSetF(), 'aug-cc-pvdz', mol)
+
+    # Run the AOEnergyModule to get the energy
+    energy = mm.run_as(AOEnergyModule(), 'My Module', basis, mol)
+
+    # Print the energy output
     print(f"Energy for basis set 'aug-cc-pvdz': {energy}")
+   
