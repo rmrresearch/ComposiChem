@@ -71,7 +71,7 @@ if("${BUILD_TESTING}")
             ${PROJECT_NAME}_integration_test
             "${${PROJECT_NAME}_TESTS_DIR}/integration_tests/test_composichem.py"
             SUBMODULES nwchemex chemcache friendzone simde chemist pluginplay 
-                       parallelzone
+                       parallelzone nux integrals
         )
     endif()
 
